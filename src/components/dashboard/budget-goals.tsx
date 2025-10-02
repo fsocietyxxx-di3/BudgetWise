@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardContent,
@@ -6,10 +7,12 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { budgets, getCategoryById } from "@/lib/data"
+import { getCategoryById } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import { useExpenses } from "@/contexts/expense-context"
 
 export function BudgetGoals() {
+  const { budgets } = useExpenses();
   return (
     <Card className="h-full">
       <CardHeader>

@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,7 @@ import { AddExpenseForm } from './add-expense-form';
 import { Input } from '../ui/input';
 
 export default function Header() {
+  const [open, setOpen] = React.useState(false);
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
       <SidebarTrigger className="md:hidden" />
@@ -27,7 +29,7 @@ export default function Header() {
               className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
             />
           </div>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button size="sm" className="gap-1 bg-accent hover:bg-accent/90">
               <PlusCircle className="h-4 w-4" />
@@ -41,7 +43,7 @@ export default function Header() {
                 Enter the details of your expense. Click save when you're done.
               </DialogDescription>
             </DialogHeader>
-            <AddExpenseForm />
+            <AddExpenseForm closeDialog={() => setOpen(false)} />
           </DialogContent>
         </Dialog>
       </div>

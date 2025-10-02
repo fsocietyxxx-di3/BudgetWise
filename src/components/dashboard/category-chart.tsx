@@ -17,8 +17,9 @@ import {
   ChartLegend,
   ChartLegendContent,
 } from "@/components/ui/chart"
-import { expenses, categories } from "@/lib/data"
+import { categories } from "@/lib/data"
 import type { ChartConfig } from "@/components/ui/chart"
+import { useExpenses } from "@/contexts/expense-context"
 
 const chartConfig = {
   spending: {
@@ -35,6 +36,7 @@ const chartConfig = {
 
 
 export function CategoryChart() {
+  const { expenses } = useExpenses();
   const categorySpending = React.useMemo(() => {
     const data: Record<string, number> = {};
     expenses.forEach(expense => {
@@ -48,7 +50,7 @@ export function CategoryChart() {
       amount,
       fill: chartConfig[categoryId]?.color,
     }));
-  }, []);
+  }, [expenses]);
 
   const totalAmount = React.useMemo(() => {
     return categorySpending.reduce((acc, curr) => acc + curr.amount, 0)

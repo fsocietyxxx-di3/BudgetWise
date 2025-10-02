@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardContent,
@@ -14,10 +15,12 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { expenses, getCategoryById } from "@/lib/data"
+import { getCategoryById } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import { useExpenses } from "@/contexts/expense-context";
 
 export function RecentSpending() {
+    const { expenses } = useExpenses();
     const recentExpenses = [...expenses].sort((a,b) => b.date.getTime() - a.date.getTime());
 
   return (
@@ -53,7 +56,7 @@ export function RecentSpending() {
                     <div className="font-medium">{expense.description}</div>
                   </TableCell>
                   <TableCell className="text-right">${expense.amount.toFixed(2)}</TableCell>
-                  <TableCell className="text-right">{expense.date.toLocaleDateString()}</TableCell>
+                  <TableCell className="text-right">{new Date(expense.date).toLocaleDateString()}</TableCell>
                 </TableRow>
               )
             })}

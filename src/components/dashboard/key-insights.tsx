@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardContent,
@@ -7,33 +8,44 @@ import {
 } from "@/components/ui/card";
 import { Lightbulb } from "lucide-react";
 import { getSpendingInsights } from "@/ai/flows/spending-insights-dashboard";
-import { expenses, budgets } from "@/lib/data";
+import { useExpenses } from "@/contexts/expense-context";
+import { useEffect, useState } from "react";
 
-export default async function KeyInsights() {
-  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-  const totalBudget = budgets.reduce((sum, budget) => sum + budget.amount, 0);
-  const categorySpending = expenses.reduce((acc, expense) => {
-    acc[expense.categoryId] = (acc[expense.categoryId] || 0) + expense.amount;
-    return acc;
-  }, {} as Record<string, number>);
+export default function KeyInsights() {
+  const { expenses, budgets } = useExpenses();
+  const [insights, setInsights] = useState("No insights available.");
 
-  const topCategories = Object.entries(categorySpending)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .map(item => item[0]);
+  useEffect(() => {
+    async function fetchInsights() {
+      const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+      const totalBudget = budgets.reduce((sum, budget) => sum + budget.amount, 0);
+      const categorySpending = expenses.reduce((acc, expense) => {
+        acc[expense.categoryId] = (acc[expense.categoryId] || 0) + expense.amount;
+        return acc;
+      }, {} as Record<string, number>);
 
-  let insights = "No insights available.";
-  try {
-    const spendingInsights = await getSpendingInsights({
-      totalExpenses,
-      budget: totalBudget,
-      topCategories,
-    });
-    insights = spendingInsights.insights;
-  } catch (e) {
-    console.error(e);
-    insights = "Could not generate insights at this time.";
-  }
+      const topCategories = Object.entries(categorySpending)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(item => item[0]);
+
+      try {
+        const spendingInsights = await getSpendingInsights({
+          totalExpenses,
+          budget: totalBudget,
+          topCategories,
+        });
+        setInsights(spendingInsights.insights);
+      } catch (e) {
+        console.error(e);
+        setInsights("Could not generate insights at this time.");
+      }
+    }
+
+    if (expenses.length > 0) {
+      fetchInsights();
+    }
+  }, [expenses, budgets]);
 
 
   return (

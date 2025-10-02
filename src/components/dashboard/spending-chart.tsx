@@ -14,8 +14,9 @@ import {
   ChartTooltipContent,
   ChartConfig,
 } from "@/components/ui/chart"
-import { expenses, categories } from "@/lib/data"
+import { categories } from "@/lib/data"
 import { useMemo } from "react"
+import { useExpenses } from "@/contexts/expense-context"
 
 const chartConfig = {
   spending: {
@@ -32,13 +33,14 @@ const chartConfig = {
 
 
 export function SpendingChart() {
+    const { expenses } = useExpenses();
     const monthlySpending = useMemo(() => {
         const data: Record<string, Record<string, number>> = {};
         
         expenses.forEach(expense => {
             const month = new Date(expense.date).toLocaleString('default', { month: 'short' });
             if (!data[month]) {
-                data[month] = { month };
+                data[month] = { month: 0, ...categories.reduce((acc, cat) => ({...acc, [cat.id]: 0}), {}) };
             }
             if (!data[month][expense.categoryId]) {
                 data[month][expense.categoryId] = 0;
@@ -46,8 +48,11 @@ export function SpendingChart() {
             data[month][expense.categoryId] += expense.amount;
         });
 
-        return Object.values(data).reverse();
-    }, []);
+        return Object.values(data).map(monthData => ({
+          ...monthData,
+          month: new Date(2024, Object.keys(data).indexOf(monthData.month.toString()), 1).toLocaleString('default', { month: 'short' })
+        })).reverse();
+    }, [expenses]);
 
   return (
     <Card>

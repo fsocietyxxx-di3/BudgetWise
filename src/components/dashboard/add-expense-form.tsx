@@ -28,6 +28,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { categories } from "@/lib/data"
+import { useExpenses } from "@/contexts/expense-context"
 
 const formSchema = z.object({
   description: z.string().min(2, "Description must be at least 2 characters."),
@@ -36,8 +37,9 @@ const formSchema = z.object({
   date: z.date(),
 })
 
-export function AddExpenseForm() {
+export function AddExpenseForm({closeDialog}: {closeDialog: () => void}) {
   const { toast } = useToast();
+  const { addExpense } = useExpenses();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,12 +51,16 @@ export function AddExpenseForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    addExpense({
+      id: new Date().toISOString(),
+      ...values,
+    });
     toast({
       title: "Expense Added",
       description: `Successfully added "${values.description}".`,
     });
-    // Here you would typically handle the form submission, e.g., send data to an API
+    form.reset();
+    closeDialog();
   }
 
   return (

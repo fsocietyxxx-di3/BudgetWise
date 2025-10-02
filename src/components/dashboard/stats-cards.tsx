@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardContent,
@@ -5,9 +6,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { DollarSign, Wallet, ShoppingCart, ArrowUp } from "lucide-react"
-import { budgets, expenses, getCategoryById } from "@/lib/data"
+import { getCategoryById } from "@/lib/data"
+import { useExpenses } from "@/contexts/expense-context";
 
 export function StatsCards() {
+  const { expenses, budgets } = useExpenses();
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
   const totalBudget = budgets.reduce((sum, budget) => sum + budget.amount, 0);
   const budgetRemaining = totalBudget - totalExpenses;
@@ -18,7 +21,7 @@ export function StatsCards() {
   }, {} as Record<string, number>);
 
   const topCategory = Object.entries(categorySpending).sort((a, b) => b[1] - a[1])[0];
-  const topCategoryInfo = getCategoryById(topCategory[0]);
+  const topCategoryInfo = topCategory ? getCategoryById(topCategory[0]) : null;
 
   return (
     <div className="grid gap-4 md:grid-cols-3">
@@ -40,7 +43,7 @@ export function StatsCards() {
         <CardContent>
           <div className="text-2xl font-bold">${budgetRemaining.toFixed(2)}</div>
           <p className="text-xs text-muted-foreground">
-            {((budgetRemaining / totalBudget) * 100).toFixed(1)}% of budget left
+            {totalBudget > 0 ? `${((budgetRemaining / totalBudget) * 100).toFixed(1)}% of budget left` : 'No budget set'}
           </p>
         </CardContent>
       </Card>
@@ -50,9 +53,9 @@ export function StatsCards() {
           {topCategoryInfo && <topCategoryInfo.icon className="h-4 w-4 text-muted-foreground" />}
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{topCategoryInfo?.name}</div>
+          <div className="text-2xl font-bold">{topCategoryInfo?.name || 'N/A'}</div>
           <p className="text-xs text-muted-foreground">
-            ${topCategory[1].toFixed(2)} spent in this category
+            {topCategory ? `$${topCategory[1].toFixed(2)} spent in this category` : 'No spending yet'}
           </p>
         </CardContent>
       </Card>

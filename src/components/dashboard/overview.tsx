@@ -1,3 +1,4 @@
+'use client';
 import { StatsCards } from './stats-cards';
 import { SpendingChart } from './spending-chart';
 import { CategoryChart } from './category-chart';
