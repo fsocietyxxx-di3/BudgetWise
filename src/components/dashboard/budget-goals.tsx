@@ -23,7 +23,7 @@ export function BudgetGoals() {
         {budgets.map((budget) => {
           const category = getCategoryById(budget.categoryId)
           if (!category) return null;
-          const progress = (budget.spent / budget.amount) * 100
+          const progress = budget.amount > 0 ? (budget.spent / budget.amount) * 100 : 0;
           return (
             <div key={budget.id}>
               <div className="flex justify-between mb-1">
@@ -35,7 +35,7 @@ export function BudgetGoals() {
                   ${budget.spent.toFixed(0)} / ${budget.amount.toFixed(0)}
                 </span>
               </div>
-              <Progress value={progress} className="h-2" indicatorClassName={cn(`bg-[${category.color}]`)} />
+              <Progress value={progress} className="h-2" indicatorStyle={{ backgroundColor: category.color }} />
             </div>
           )
         })}
