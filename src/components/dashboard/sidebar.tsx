@@ -71,16 +71,24 @@ export default function DashboardSidebar() {
       <SidebarFooter className="p-2">
         <SidebarMenu>
            <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Help">
-              <CircleHelp />
-              <span>Help</span>
-            </SidebarMenuButton>
+            <Link href="/help" passHref>
+              <SidebarMenuButton asChild isActive={pathname === '/help'} tooltip="Help">
+                <p>
+                  <CircleHelp />
+                  <span>Help</span>
+                </p>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Settings">
-              <Settings />
-              <span>Settings</span>
-            </SidebarMenuButton>
+            <Link href="/settings" passHref>
+              <SidebarMenuButton asChild isActive={pathname === '/settings'} tooltip="Settings">
+                <p>
+                  <Settings />
+                  <span>Settings</span>
+                </p>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
         </SidebarMenu>
         <Separator className="my-2" />
