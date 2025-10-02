@@ -18,7 +18,7 @@ import { expenses, getCategoryById } from "@/lib/data"
 import { cn } from "@/lib/utils"
 
 export function RecentSpending() {
-    const recentExpenses = [...expenses].sort((a,b) => b.date.getTime() - a.date.getTime()).slice(0, 7);
+    const recentExpenses = [...expenses].sort((a,b) => b.date.getTime() - a.date.getTime());
 
   return (
     <Card>

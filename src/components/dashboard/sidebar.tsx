@@ -17,6 +17,7 @@ import {
   Settings,
   BarChart,
   CircleHelp,
+  ArrowRightLeft
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -42,6 +43,16 @@ export default function DashboardSidebar() {
                 <p>
                   <LayoutDashboard />
                   <span>Dashboard</span>
+                </p>
+              </SidebarMenuButton>
+            </Link>
+          </SidebarMenuItem>
+           <SidebarMenuItem>
+            <Link href="/transactions" passHref>
+              <SidebarMenuButton asChild isActive={pathname === '/transactions'} tooltip="Transactions">
+                <p>
+                  <ArrowRightLeft />
+                  <span>Transactions</span>
                 </p>
               </SidebarMenuButton>
             </Link>
