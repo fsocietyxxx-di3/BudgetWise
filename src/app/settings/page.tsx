@@ -1,3 +1,4 @@
+'use client';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import DashboardSidebar from '@/components/dashboard/sidebar';
 import Header from '@/components/dashboard/header';
@@ -5,11 +6,14 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { categories } from '@/lib/data';
+import { categories, getCategoryById } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { PlusCircle } from 'lucide-react';
+import { useExpenses } from '@/contexts/expense-context';
 
 export default function SettingsPage() {
+  const { budgets } = useExpenses();
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background/60">
@@ -47,14 +51,24 @@ export default function SettingsPage() {
                         <CardDescription>Set or change your monthly budget for each category.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="budget-food">Food</Label>
-                            <Input id="budget-food" type="number" defaultValue="500" />
-                        </div>
-                         <div className="space-y-2">
-                            <Label htmlFor="budget-shopping">Shopping</Label>
-                            <Input id="budget-shopping" type="number" defaultValue="300" />
-                        </div>
+                        {budgets.map(budget => {
+                          const category = getCategoryById(budget.categoryId);
+                          if (!category) return null;
+                          const remaining = budget.amount - budget.spent;
+
+                          return (
+                            <div key={budget.id} className="space-y-2">
+                              <div className="flex justify-between">
+                                <Label htmlFor={`budget-${budget.categoryId}`}>{category.name}</Label>
+                                <span className="text-sm text-muted-foreground">
+                                  ${remaining.toFixed(2)} remaining
+                                </span>
+                              </div>
+                              <Input id={`budget-${budget.categoryId}`} type="number" defaultValue={budget.amount} />
+                            </div>
+                          )
+                        })}
+
                         <Button className="w-full bg-accent hover:bg-accent/90">Update Budgets</Button>
                     </CardContent>
                 </Card>
