@@ -8,6 +8,8 @@ interface ExpenseContextType {
   expenses: Expense[];
   budgets: Budget[];
   addExpense: (expense: Expense) => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
 }
 
 const ExpenseContext = createContext<ExpenseContextType | undefined>(undefined);
@@ -15,6 +17,7 @@ const ExpenseContext = createContext<ExpenseContextType | undefined>(undefined);
 export function ExpenseProvider({ children }: { children: ReactNode }) {
   const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
   const [budgets, setBudgets] = useState<Budget[]>(initialBudgets);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const addExpense = (expense: Expense) => {
     setExpenses(prevExpenses => [...prevExpenses, expense]);
@@ -30,7 +33,7 @@ export function ExpenseProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ExpenseContext.Provider value={{ expenses, budgets, addExpense }}>
+    <ExpenseContext.Provider value={{ expenses, budgets, addExpense, searchTerm, setSearchTerm }}>
       {children}
     </ExpenseContext.Provider>
   );

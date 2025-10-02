@@ -1,4 +1,5 @@
 'use client';
+import { useMemo } from "react";
 import {
   Card,
   CardContent,
@@ -20,8 +21,15 @@ import { cn } from "@/lib/utils"
 import { useExpenses } from "@/contexts/expense-context";
 
 export function RecentSpending() {
-    const { expenses } = useExpenses();
-    const recentExpenses = [...expenses].sort((a,b) => b.date.getTime() - a.date.getTime());
+    const { expenses, searchTerm } = useExpenses();
+
+    const filteredExpenses = useMemo(() => {
+        const lowercasedTerm = searchTerm.toLowerCase();
+        return expenses.filter(expense => 
+            expense.description.toLowerCase().includes(lowercasedTerm) ||
+            getCategoryById(expense.categoryId)?.name.toLowerCase().includes(lowercasedTerm)
+        ).sort((a, b) => b.date.getTime() - a.date.getTime());
+    }, [expenses, searchTerm]);
 
   return (
     <Card>
@@ -40,26 +48,34 @@ export function RecentSpending() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {recentExpenses.map((expense) => {
-              const category = getCategoryById(expense.categoryId)
-              return (
-                <TableRow key={expense.id}>
-                  <TableCell>
-                    {category && (
-                      <Badge variant="outline" className="flex items-center gap-2 w-fit">
-                        <category.icon className={cn("h-3 w-3")} style={{ color: category.color }}/>
-                        {category.name}
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <div className="font-medium">{expense.description}</div>
-                  </TableCell>
-                  <TableCell className="text-right">₱{expense.amount.toFixed(2)}</TableCell>
-                  <TableCell className="text-right">{new Date(expense.date).toLocaleDateString()}</TableCell>
+            {filteredExpenses.length > 0 ? (
+                filteredExpenses.map((expense) => {
+                const category = getCategoryById(expense.categoryId)
+                return (
+                    <TableRow key={expense.id}>
+                    <TableCell>
+                        {category && (
+                        <Badge variant="outline" className="flex items-center gap-2 w-fit">
+                            <category.icon className={cn("h-3 w-3")} style={{ color: category.color }}/>
+                            {category.name}
+                        </Badge>
+                        )}
+                    </TableCell>
+                    <TableCell>
+                        <div className="font-medium">{expense.description}</div>
+                    </TableCell>
+                    <TableCell className="text-right">₱{expense.amount.toFixed(2)}</TableCell>
+                    <TableCell className="text-right">{new Date(expense.date).toLocaleDateString()}</TableCell>
+                    </TableRow>
+                )
+                })
+            ) : (
+                <TableRow>
+                    <TableCell colSpan={4} className="text-center">
+                        No transactions found.
+                    </TableCell>
                 </TableRow>
-              )
-            })}
+            )}
           </TableBody>
         </Table>
       </CardContent>

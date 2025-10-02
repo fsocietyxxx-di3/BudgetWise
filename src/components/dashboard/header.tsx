@@ -14,9 +14,12 @@ import {
 } from "@/components/ui/dialog"
 import { AddExpenseForm } from './add-expense-form';
 import { Input } from '../ui/input';
+import { useExpenses } from '@/contexts/expense-context';
 
 export default function Header() {
   const [open, setOpen] = React.useState(false);
+  const { searchTerm, setSearchTerm } = useExpenses();
+
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
       <SidebarTrigger className="md:hidden" />
@@ -27,6 +30,8 @@ export default function Header() {
               type="search"
               placeholder="Search transactions..."
               className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         <Dialog open={open} onOpenChange={setOpen}>
