@@ -6,9 +6,35 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Lightbulb } from "lucide-react";
+import { getSpendingInsights } from "@/ai/flows/spending-insights-dashboard";
+import { expenses, budgets } from "@/lib/data";
 
 export default async function KeyInsights() {
-  const insights = "You're on track with your budget this month. Your top spending categories are Food and Transportation, which is typical. Consider looking for ways to save on groceries to free up more of your budget.";
+  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  const totalBudget = budgets.reduce((sum, budget) => sum + budget.amount, 0);
+  const categorySpending = expenses.reduce((acc, expense) => {
+    acc[expense.categoryId] = (acc[expense.categoryId] || 0) + expense.amount;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const topCategories = Object.entries(categorySpending)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(item => item[0]);
+
+  let insights = "No insights available.";
+  try {
+    const spendingInsights = await getSpendingInsights({
+      totalExpenses,
+      budget: totalBudget,
+      topCategories,
+    });
+    insights = spendingInsights.insights;
+  } catch (e) {
+    console.error(e);
+    insights = "Could not generate insights at this time.";
+  }
+
 
   return (
     <Card className="h-full bg-primary/20 border-primary/40">
