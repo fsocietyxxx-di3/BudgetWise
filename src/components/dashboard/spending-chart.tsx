@@ -14,33 +14,35 @@ import {
   ChartTooltipContent,
   ChartConfig,
 } from "@/components/ui/chart"
-import { categories } from "@/lib/data"
 import { useMemo } from "react"
 import { useExpenses } from "@/contexts/expense-context"
 
-const chartConfig = {
-  spending: {
-    label: "Spending",
-  },
-  ...categories.reduce((acc, category) => {
-    acc[category.id] = {
-      label: category.name,
-      color: category.color,
-    }
-    return acc;
-  }, {} as Record<string, { label: string; color: string }>)
-} satisfies ChartConfig;
-
-
 export function SpendingChart() {
-    const { expenses } = useExpenses();
+    const { expenses, categories } = useExpenses();
+    
+    const chartConfig = useMemo(() => {
+        const config: ChartConfig = {
+            spending: {
+                label: "Spending",
+            },
+        };
+        categories.forEach(category => {
+            config[category.id] = {
+                label: category.name,
+                color: category.color,
+            }
+        });
+        return config;
+    }, [categories]);
+
     const monthlySpending = useMemo(() => {
-        const data: Record<string, Record<string, number>> = {};
+        const data: Record<string, Record<string, any>> = {};
         
         expenses.forEach(expense => {
-            const month = new Date(expense.date).toLocaleString('default', { month: 'short' });
+            const expenseDate = new Date(expense.date);
+            const month = expenseDate.toLocaleString('default', { month: 'short' });
             if (!data[month]) {
-                data[month] = { month: 0, ...categories.reduce((acc, cat) => ({...acc, [cat.id]: 0}), {}) };
+                data[month] = { month, date: new Date(expenseDate.getFullYear(), expenseDate.getMonth(), 1), ...categories.reduce((acc, cat) => ({...acc, [cat.id]: 0}), {}) };
             }
             if (!data[month][expense.categoryId]) {
                 data[month][expense.categoryId] = 0;
@@ -48,11 +50,8 @@ export function SpendingChart() {
             data[month][expense.categoryId] += expense.amount;
         });
 
-        return Object.values(data).map(monthData => ({
-          ...monthData,
-          month: new Date(2024, Object.keys(data).indexOf(monthData.month.toString()), 1).toLocaleString('default', { month: 'short' })
-        })).reverse();
-    }, [expenses]);
+        return Object.values(data).sort((a,b) => a.date.getTime() - b.date.getTime());
+    }, [expenses, categories]);
 
   return (
     <Card>

@@ -6,11 +6,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { DollarSign, Wallet, ShoppingCart, ArrowUp } from "lucide-react"
-import { getCategoryById } from "@/lib/data"
 import { useExpenses } from "@/contexts/expense-context";
 
 export function StatsCards() {
-  const { expenses, budgets } = useExpenses();
+  const { expenses, budgets, getCategoryById } = useExpenses();
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
   const totalBudget = budgets.reduce((sum, budget) => sum + budget.amount, 0);
   const budgetRemaining = totalBudget - totalExpenses;

@@ -16,20 +16,19 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { getCategoryById } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import { useExpenses } from "@/contexts/expense-context";
 
 export function RecentSpending() {
-    const { expenses, searchTerm } = useExpenses();
+    const { expenses, searchTerm, getCategoryById } = useExpenses();
 
     const filteredExpenses = useMemo(() => {
         const lowercasedTerm = searchTerm.toLowerCase();
         return expenses.filter(expense => 
             expense.description.toLowerCase().includes(lowercasedTerm) ||
             getCategoryById(expense.categoryId)?.name.toLowerCase().includes(lowercasedTerm)
-        ).sort((a, b) => b.date.getTime() - a.date.getTime());
-    }, [expenses, searchTerm]);
+        ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }, [expenses, searchTerm, getCategoryById]);
 
   return (
     <Card>

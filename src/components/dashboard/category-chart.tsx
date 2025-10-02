@@ -17,26 +17,28 @@ import {
   ChartLegend,
   ChartLegendContent,
 } from "@/components/ui/chart"
-import { categories } from "@/lib/data"
 import type { ChartConfig } from "@/components/ui/chart"
 import { useExpenses } from "@/contexts/expense-context"
 
-const chartConfig = {
-  spending: {
-    label: "Spending",
-  },
-  ...categories.reduce((acc, category) => {
-    acc[category.id] = {
-      label: category.name,
-      color: category.color,
-    }
-    return acc;
-  }, {} as Record<string, { label: string; color: string }>)
-} satisfies ChartConfig;
-
-
 export function CategoryChart() {
-  const { expenses } = useExpenses();
+  const { expenses, categories } = useExpenses();
+
+  const chartConfig = React.useMemo(() => {
+    const config: ChartConfig = {
+      spending: {
+        label: "Spending",
+      },
+    };
+    categories.forEach(category => {
+      config[category.id] = {
+        label: category.name,
+        color: category.color,
+      }
+    });
+    return config;
+  }, [categories]);
+
+
   const categorySpending = React.useMemo(() => {
     const data: Record<string, number> = {};
     expenses.forEach(expense => {
@@ -50,7 +52,7 @@ export function CategoryChart() {
       amount,
       fill: chartConfig[categoryId]?.color,
     }));
-  }, [expenses]);
+  }, [expenses, chartConfig]);
 
   const totalAmount = React.useMemo(() => {
     return categorySpending.reduce((acc, curr) => acc + curr.amount, 0)

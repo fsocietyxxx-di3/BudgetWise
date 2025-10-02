@@ -7,7 +7,6 @@ import {
   ShoppingCart,
   HeartPulse,
   MoreHorizontal,
-  LucideIcon,
 } from 'lucide-react';
 
 export const categories: Category[] = [
@@ -24,7 +23,7 @@ export const expenses: Expense[] = [];
 
 const calculateSpent = (categoryId: string) =>
   expenses
-    .filter((e) => e.categoryId === categoryId && e.date.getFullYear() === 2024 && e.date.getMonth() === 6) // July 2024
+    .filter((e) => e.categoryId === categoryId)
     .reduce((sum, e) => sum + e.amount, 0);
 
 export const budgets: Budget[] = [

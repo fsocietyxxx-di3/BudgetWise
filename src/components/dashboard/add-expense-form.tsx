@@ -27,7 +27,6 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
-import { categories } from "@/lib/data"
 import { useExpenses } from "@/contexts/expense-context"
 
 const formSchema = z.object({
@@ -39,7 +38,7 @@ const formSchema = z.object({
 
 export function AddExpenseForm({closeDialog}: {closeDialog: () => void}) {
   const { toast } = useToast();
-  const { addExpense } = useExpenses();
+  const { addExpense, categories } = useExpenses();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,10 +50,7 @@ export function AddExpenseForm({closeDialog}: {closeDialog: () => void}) {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    addExpense({
-      id: new Date().toISOString(),
-      ...values,
-    });
+    addExpense(values);
     toast({
       title: "Expense Added",
       description: `Successfully added "${values.description}".`,

@@ -7,12 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { getCategoryById } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import { useExpenses } from "@/contexts/expense-context"
 
 export function BudgetGoals() {
-  const { budgets } = useExpenses();
+  const { budgets, getCategoryById } = useExpenses();
   return (
     <Card className="h-full">
       <CardHeader>
