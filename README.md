@@ -67,7 +67,3 @@ Follow these instructions to get a copy of the project up and running on your lo
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/budgetwise/issues).
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
