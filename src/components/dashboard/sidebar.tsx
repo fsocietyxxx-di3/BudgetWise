@@ -65,6 +65,20 @@ export default function DashboardSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <Separator className="my-2" />
+        <div className="px-2 text-xs text-muted-foreground group-data-[collapsible=icon]:hidden space-y-1">
+          <p className="font-semibold text-foreground">Created by:</p>
+          <p>Jemrex Estrellado</p>
+          <a
+            href="https://www.facebook.com/share/1GyG2P8SN7/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            Facebook
+          </a>
+           <p>+63 9935961796</p>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );
