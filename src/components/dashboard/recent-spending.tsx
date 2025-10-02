@@ -37,46 +37,83 @@ export function RecentSpending() {
         <CardDescription>A list of your most recent transactions.</CardDescription>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Category</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-              <TableHead className="text-right">Date</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+        {/* Mobile View */}
+        <div className="md:hidden">
+          <div className="space-y-4">
             {filteredExpenses.length > 0 ? (
-                filteredExpenses.map((expense) => {
-                const category = getCategoryById(expense.categoryId)
+              filteredExpenses.map((expense) => {
+                const category = getCategoryById(expense.categoryId);
                 return (
-                    <TableRow key={expense.id}>
-                    <TableCell>
+                  <div key={expense.id} className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex flex-col space-y-1.5">
+                        <p className="font-semibold">{expense.description}</p>
                         {category && (
-                        <Badge variant="outline" className="flex items-center gap-2 w-fit">
-                            <category.icon className={cn("h-3 w-3")} style={{ color: category.color }}/>
-                            {category.name}
-                        </Badge>
+                          <Badge variant="outline" className="w-fit flex items-center gap-2">
+                             <category.icon className={cn("h-3 w-3")} style={{ color: category.color }}/>
+                             {category.name}
+                          </Badge>
                         )}
-                    </TableCell>
-                    <TableCell>
-                        <div className="font-medium">{expense.description}</div>
-                    </TableCell>
-                    <TableCell className="text-right">₱{expense.amount.toFixed(2)}</TableCell>
-                    <TableCell className="text-right">{new Date(expense.date).toLocaleDateString()}</TableCell>
-                    </TableRow>
-                )
-                })
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-lg">₱{expense.amount.toFixed(2)}</p>
+                        <p className="text-sm text-muted-foreground">{new Date(expense.date).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
             ) : (
-                <TableRow>
-                    <TableCell colSpan={4} className="text-center">
-                        No transactions found.
-                    </TableCell>
-                </TableRow>
+              <div className="text-center text-muted-foreground py-8">
+                No transactions found.
+              </div>
             )}
-          </TableBody>
-        </Table>
+          </div>
+        </div>
+
+        {/* Desktop View */}
+        <div className="hidden md:block">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Category</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+                <TableHead className="text-right">Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredExpenses.length > 0 ? (
+                  filteredExpenses.map((expense) => {
+                  const category = getCategoryById(expense.categoryId)
+                  return (
+                      <TableRow key={expense.id}>
+                      <TableCell>
+                          {category && (
+                          <Badge variant="outline" className="flex items-center gap-2 w-fit">
+                              <category.icon className={cn("h-3 w-3")} style={{ color: category.color }}/>
+                              {category.name}
+                          </Badge>
+                          )}
+                      </TableCell>
+                      <TableCell>
+                          <div className="font-medium">{expense.description}</div>
+                      </TableCell>
+                      <TableCell className="text-right">₱{expense.amount.toFixed(2)}</TableCell>
+                      <TableCell className="text-right">{new Date(expense.date).toLocaleDateString()}</TableCell>
+                      </TableRow>
+                  )
+                  })
+              ) : (
+                  <TableRow>
+                      <TableCell colSpan={4} className="text-center">
+                          No transactions found.
+                      </TableCell>
+                  </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   )
