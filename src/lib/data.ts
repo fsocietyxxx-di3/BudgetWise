@@ -28,13 +28,13 @@ const calculateSpent = (categoryId: string) =>
     .reduce((sum, e) => sum + e.amount, 0);
 
 export const budgets: Budget[] = [
-  { id: '1', categoryId: 'food', amount: 500, spent: calculateSpent('food') },
-  { id: '2', categoryId: 'transportation', amount: 150, spent: calculateSpent('transportation') },
-  { id: '3', categoryId: 'entertainment', amount: 200, spent: calculateSpent('entertainment') },
-  { id: '4', categoryId: 'utilities', amount: 250, spent: calculateSpent('utilities') },
-  { id: '5', categoryId: 'shopping', amount: 300, spent: calculateSpent('shopping') },
-  { id: '6', categoryId: 'health', amount: 100, spent: calculateSpent('health') },
-  { id: '7', categoryId: 'other', amount: 100, spent: calculateSpent('other') },
+  { id: '1', categoryId: 'food', amount: 10000, spent: calculateSpent('food') },
+  { id: '2', categoryId: 'transportation', amount: 4000, spent: calculateSpent('transportation') },
+  { id: '3', categoryId: 'entertainment', amount: 4000, spent: calculateSpent('entertainment') },
+  { id: '4', categoryId: 'utilities', amount: 4000, spent: calculateSpent('utilities') },
+  { id: '5', categoryId: 'shopping', amount: 5000, spent: calculateSpent('shopping') },
+  { id: '6', categoryId: 'health', amount: 2000, spent: calculateSpent('health') },
+  { id: '7', categoryId: 'other', amount: 1000, spent: calculateSpent('other') },
 ];
 
 export function getCategoryById(id: string) {
