@@ -40,7 +40,7 @@ export const expenses: Expense[] = [
 
 const calculateSpent = (categoryId: string) =>
   expenses
-    .filter((e) => e.categoryId === categoryId && e.date.getMonth() === new Date().getMonth())
+    .filter((e) => e.categoryId === categoryId && e.date.getFullYear() === 2024 && e.date.getMonth() === 6) // July 2024
     .reduce((sum, e) => sum + e.amount, 0);
 
 export const budgets: Budget[] = [
