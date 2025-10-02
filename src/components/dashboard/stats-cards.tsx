@@ -31,7 +31,7 @@ export function StatsCards() {
           <DollarSign className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">${totalExpenses.toFixed(2)}</div>
+          <div className="text-2xl font-bold">₱{totalExpenses.toFixed(2)}</div>
           <p className="text-xs text-muted-foreground">+20.1% from last month</p>
         </CardContent>
       </Card>
@@ -41,7 +41,7 @@ export function StatsCards() {
           <Wallet className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">${budgetRemaining.toFixed(2)}</div>
+          <div className="text-2xl font-bold">₱{budgetRemaining.toFixed(2)}</div>
           <p className="text-xs text-muted-foreground">
             {totalBudget > 0 ? `${((budgetRemaining / totalBudget) * 100).toFixed(1)}% of budget left` : 'No budget set'}
           </p>
@@ -55,7 +55,7 @@ export function StatsCards() {
         <CardContent>
           <div className="text-2xl font-bold">{topCategoryInfo?.name || 'N/A'}</div>
           <p className="text-xs text-muted-foreground">
-            {topCategory ? `$${topCategory[1].toFixed(2)} spent in this category` : 'No spending yet'}
+            {topCategory ? `₱${topCategory[1].toFixed(2)} spent in this category` : 'No spending yet'}
           </p>
         </CardContent>
       </Card>

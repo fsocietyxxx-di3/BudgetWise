@@ -61,7 +61,7 @@ export default function SettingsPage() {
                               <div className="flex justify-between">
                                 <Label htmlFor={`budget-${budget.categoryId}`}>{category.name}</Label>
                                 <span className="text-sm text-muted-foreground">
-                                  ${remaining.toFixed(2)} remaining
+                                  ₱{remaining.toFixed(2)} remaining
                                 </span>
                               </div>
                               <Input id={`budget-${budget.categoryId}`} type="number" defaultValue={budget.amount} />

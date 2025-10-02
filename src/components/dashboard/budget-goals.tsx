@@ -32,7 +32,7 @@ export function BudgetGoals() {
                     <span className="text-sm font-medium">{category.name}</span>
                 </div>
                 <span className="text-sm text-muted-foreground">
-                  ${budget.spent.toFixed(0)} / ${budget.amount.toFixed(0)}
+                  ₱{budget.spent.toFixed(0)} / ₱{budget.amount.toFixed(0)}
                 </span>
               </div>
               <Progress value={progress} className="h-2" indicatorStyle={{ backgroundColor: category.color }} />

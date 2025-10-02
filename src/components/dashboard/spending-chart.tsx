@@ -75,7 +75,7 @@ export function SpendingChart() {
               tickLine={false}
               axisLine={false}
               tickMargin={10}
-              tickFormatter={(value) => `$${value}`}
+              tickFormatter={(value) => `₱${value}`}
             />
             <ChartTooltip content={<ChartTooltipContent />} />
             {categories.map(category => (

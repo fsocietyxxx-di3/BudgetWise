@@ -55,7 +55,7 @@ export function RecentSpending() {
                   <TableCell>
                     <div className="font-medium">{expense.description}</div>
                   </TableCell>
-                  <TableCell className="text-right">${expense.amount.toFixed(2)}</TableCell>
+                  <TableCell className="text-right">₱{expense.amount.toFixed(2)}</TableCell>
                   <TableCell className="text-right">{new Date(expense.date).toLocaleDateString()}</TableCell>
                 </TableRow>
               )

@@ -60,11 +60,11 @@ const prompt = ai.definePrompt({
   output: { schema: ExpensePredictionOutputSchema },
   prompt: `You are a financial analyst. Based on the following list of recent expenses, predict the total spending for the next 30 days. 
   
-Provide a total estimated amount and a likely breakdown by category. Keep the analysis concise and provide one piece of actionable advice.
+The currency is in Philippine Pesos (₱). Provide a total estimated amount and a likely breakdown by category. Keep the analysis concise and provide one piece of actionable advice.
 
 Recent Expenses:
 {{#each recentExpenses}}
-- {{date}}: {{description}} ($ {{{amount}}} in {{category}})
+- {{date}}: {{description}} (₱{{{amount}}} in {{category}})
 {{/each}}
 `,
 });
