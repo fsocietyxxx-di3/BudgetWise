@@ -2,7 +2,7 @@
 
 BudgetWise is a modern, responsive, and intelligent web application designed to help you take control of your finances. With an intuitive interface and powerful features, you can easily track your expenses, manage your budgets, and gain valuable insights into your spending habits. This application is built with Next.js and leverages the power of Google's Gemini AI for expense prediction.
 
-![BudgetWise Dashboard](https://imgur.com/a/0EzqAMW) 
+![BudgetWise Dashboard](https://imgur.com/a/CWmA8DV) 
 
 ## ✨ Key Features
 
