@@ -49,6 +49,18 @@ export default function HelpPage() {
                         Go to the &quot;Reports&quot; page to get a more in-depth look at your spending habits over time with detailed charts and graphs.
                       </AccordionContent>
                     </AccordionItem>
+                    <AccordionItem value="item-6">
+                      <AccordionTrigger>Step 6: Getting Expense Predictions</AccordionTrigger>
+                      <AccordionContent>
+                        On the main dashboard, find the &quot;Expense Prediction&quot; card. Enter your Gemini API key and click the button to get an AI-powered forecast of your spending for the next 30 days. You can get a free API key from Google AI Studio.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-7">
+                      <AccordionTrigger>Step 7: Customizing Settings</AccordionTrigger>
+                      <AccordionContent>
+                        Go to the &quot;Settings&quot; page to manage your spending categories and customize your monthly budgets for each category. This allows you to tailor the app to your personal financial goals.
+                      </AccordionContent>
+                    </AccordionItem>
                   </Accordion>
                 </CardContent>
             </Card>
