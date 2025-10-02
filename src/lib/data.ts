@@ -20,23 +20,7 @@ export const categories: Category[] = [
   { id: 'other', name: 'Other', icon: MoreHorizontal, color: 'hsl(var(--muted-foreground))' },
 ];
 
-export const expenses: Expense[] = [
-    { id: '1', description: 'Groceries from Walmart', amount: 75.5, date: new Date('2024-07-20'), categoryId: 'food' },
-    { id: '2', description: 'Gasoline', amount: 40.0, date: new Date('2024-07-19'), categoryId: 'transportation' },
-    { id: '3', description: 'Movie tickets for "Dune"', amount: 30.0, date: new Date('2024-07-18'), categoryId: 'entertainment' },
-    { id: '4', description: 'Electricity bill', amount: 120.0, date: new Date('2024-07-15'), categoryId: 'utilities' },
-    { id: '5', description: 'New pair of shoes', amount: 90.0, date: new Date('2024-07-12'), categoryId: 'shopping' },
-    { id: '6', description: 'Lunch with friends', amount: 45.25, date: new Date('2024-07-10'), categoryId: 'food' },
-    { id: '7', description: 'Pharmacy', amount: 25.0, date: new Date('2024-07-09'), categoryId: 'health' },
-    { id: '8', description: 'Uber ride', amount: 15.75, date: new Date('2024-07-05'), categoryId: 'transportation' },
-    { id: '9', description: 'Concert ticket', amount: 150.0, date: new Date('2024-06-25'), categoryId: 'entertainment' },
-    { id: '10', description: 'Internet bill', amount: 60.0, date: new Date('2024-06-20'), categoryId: 'utilities' },
-    { id: '11', description: 'Dinner at Italian restaurant', amount: 85.0, date: new Date('2024-06-15'), categoryId: 'food' },
-    { id: '12', description: 'New shirt', amount: 55.0, date: new Date('2024-06-10'), categoryId: 'shopping' },
-    { id: '13', description: 'Coffee with a friend', amount: 8.50, date: new Date('2024-05-28'), categoryId: 'food' },
-    { id: '14', description: 'Public transport', amount: 25.00, date: new Date('2024-05-22'), categoryId: 'transportation' },
-    { id: '15', description: 'Streaming service subscription', amount: 15.00, date: new Date('2024-05-18'), categoryId: 'entertainment' },
-];
+export const expenses: Expense[] = [];
 
 const calculateSpent = (categoryId: string) =>
   expenses
