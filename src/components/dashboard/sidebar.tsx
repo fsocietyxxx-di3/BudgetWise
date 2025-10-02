@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Sidebar,
   SidebarContent,
@@ -16,8 +18,12 @@ import {
   BarChart,
   CircleHelp,
 } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
 
 export default function DashboardSidebar() {
+  const pathname = usePathname();
   return (
     <Sidebar>
       <SidebarHeader>
@@ -31,22 +37,34 @@ export default function DashboardSidebar() {
       <SidebarContent className="p-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton isActive tooltip="Dashboard">
-              <LayoutDashboard />
-              <span>Dashboard</span>
-            </SidebarMenuButton>
+            <Link href="/" passHref>
+              <SidebarMenuButton asChild isActive={pathname === '/'} tooltip="Dashboard">
+                <p>
+                  <LayoutDashboard />
+                  <span>Dashboard</span>
+                </p>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Budgets">
-              <Wallet />
-              <span>Budgets</span>
-            </SidebarMenuButton>
+            <Link href="/budgets" passHref>
+              <SidebarMenuButton asChild isActive={pathname === '/budgets'} tooltip="Budgets">
+                <p>
+                  <Wallet />
+                  <span>Budgets</span>
+                </p>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Reports">
-              <BarChart />
-              <span>Reports</span>
-            </SidebarMenuButton>
+            <Link href="/reports" passHref>
+              <SidebarMenuButton asChild isActive={pathname === '/reports'} tooltip="Reports">
+                <p>
+                  <BarChart />
+                  <span>Reports</span>
+                </p>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarContent>
