@@ -66,4 +66,4 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/budgetwise/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/fsocietyxxx-di3/BudgetWise/issues).
