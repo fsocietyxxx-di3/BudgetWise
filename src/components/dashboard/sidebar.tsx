@@ -7,7 +7,6 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from '@/components/ui/sidebar';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { Logo } from '@/components/logo';
 import {
@@ -66,17 +65,6 @@ export default function DashboardSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <Separator className="my-2" />
-        <div className="flex items-center gap-3 px-2 py-1">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="https://picsum.photos/seed/1/40/40" alt="@shadcn" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-medium text-foreground">User</span>
-            <span className="text-xs text-muted-foreground">user@budgetwise.app</span>
-          </div>
-        </div>
       </SidebarFooter>
     </Sidebar>
   );
