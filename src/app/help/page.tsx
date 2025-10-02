@@ -34,7 +34,7 @@ export default function HelpPage() {
                     <AccordionItem value="item-3">
                       <AccordionTrigger>Step 3: Checking Transactions</AccordionTrigger>
                       <AccordionContent>
-                        Navigate to the &quot;Transactions&quot; page from the sidebar to see a detailed list of all the expenses you have added.
+                        Navigate to the &quot;Transactions&quot; page from the sidebar to see a detailed list of all the expenses you have added. You can also use the search bar to filter your transactions.
                       </AccordionContent>
                     </AccordionItem>
                      <AccordionItem value="item-4">
@@ -52,7 +52,7 @@ export default function HelpPage() {
                     <AccordionItem value="item-6">
                       <AccordionTrigger>Step 6: Getting Expense Predictions</AccordionTrigger>
                       <AccordionContent>
-                        On the main dashboard, find the &quot;Expense Prediction&quot; card. Enter your Gemini API key and click the button to get an AI-powered forecast of your spending for the next 30 days. You can get a free API key from Google AI Studio.
+                        On the main dashboard, find the &quot;Expense Prediction&quot; card. Click the button to get an AI-powered forecast of your spending for the next 30 days.
                       </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-7">

@@ -14,36 +14,22 @@ import { useToast } from "@/hooks/use-toast";
 import { useExpenses } from "@/contexts/expense-context";
 import { getExpensePrediction } from "@/ai/flows/expense-prediction-flow";
 import { Loader2 } from "lucide-react";
-import { Textarea } from "../ui/textarea";
-import { setGeminiApiKey } from "@/ai/flows/expense-prediction-flow";
 
 export function ExpensePrediction() {
   const [prediction, setPrediction] = useState("");
   const [loading, setLoading] = useState(false);
-  const { expenses } = useExpenses();
+  const { expenses, getCategoryById } = useExpenses();
   const { toast } = useToast();
-  const [apiKey, setApiKey] = useState('');
 
   const handlePrediction = async () => {
-    if (!apiKey) {
-      toast({
-        variant: "destructive",
-        title: "Missing API Key",
-        description: "Please enter your Gemini API key to get a prediction.",
-      });
-      return;
-    }
     setLoading(true);
     setPrediction("");
     try {
-      // Set the key on the server for the flow to use
-      await setGeminiApiKey(apiKey);
-
       const recentExpenses = expenses.slice(-10).map(e => ({
         description: e.description,
         amount: e.amount,
         date: e.date.toISOString().split('T')[0], // Format as YYYY-MM-DD
-        category: e.categoryId
+        category: getCategoryById(e.categoryId)?.name || 'Unknown',
       }));
 
       const result = await getExpensePrediction({ recentExpenses });
@@ -69,21 +55,10 @@ export function ExpensePrediction() {
           Expense Prediction
         </CardTitle>
         <CardDescription>
-          Get an AI-powered forecast of your spending for the next 30 days. Enter your Gemini API key to begin.
+          Get an AI-powered forecast of your spending for the next 30 days.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-            <label htmlFor="apiKey" className="text-sm font-medium">Gemini API Key</label>
-            <Textarea
-                id="apiKey"
-                placeholder="Enter your Gemini API key"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                className="min-h-[60px]"
-            />
-        </div>
-
         <Button onClick={handlePrediction} className="w-full bg-accent hover:bg-accent/90" disabled={loading}>
           {loading ? (
             <>
@@ -101,10 +76,6 @@ export function ExpensePrediction() {
              <p className="text-sm text-foreground/80 bg-primary/10 p-3 rounded-md">{prediction}</p>
            </div>
         )}
-
-        <p className="text-xs text-muted-foreground text-center pt-2">
-            You can get a free API key from Google AI Studio. The key is only used for this session.
-        </p>
       </CardContent>
     </Card>
   );
